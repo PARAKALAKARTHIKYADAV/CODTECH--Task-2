@@ -1,0 +1,96 @@
+#include <stdio.h>
+#include <math.h>
+
+// Function to calculate accuracy
+double accuracy(double tp, double tn, double fp, double fn) {
+    return (tp + tn) / (tp + tn + fp + fn);
+}
+
+// Function to calculate precision
+double precision(double tp, double fp) {
+    return tp / (tp + fp);
+}
+
+// Function to calculate recall
+double recall(double tp, double fn) {
+    return tp / (tp + fn);
+}
+
+// Function to calculate F1 score
+double f1_score(double precision, double recall) {
+    return 2 * (precision * recall) / (precision + recall);
+}
+
+// Function to calculate Mean Absolute Error (MAE)
+double mae(double y_true[], double y_pred[], int n) {
+    double sum = 0;
+    for (int i = 0; i < n; i++) {
+        sum += fabs(y_true[i] - y_pred[i]);
+    }
+    return sum / n;
+}
+
+// Function to calculate Mean Squared Error (MSE)
+double mse(double y_true[], double y_pred[], int n) {
+    double sum = 0;
+    for (int i = 0; i < n; i++) {
+        sum += pow(y_true[i] - y_pred[i], 2);
+    }
+    return sum / n;
+}
+
+// Function to calculate Root Mean Squared Error (RMSE)
+double rmse(double mse) {
+    return sqrt(mse);
+}
+
+// Function to calculate Mean Absolute Percentage Error (MAPE)
+double mape(double y_true[], double y_pred[], int n) {
+    double sum = 0;
+    for (int i = 0; i < n; i++) {
+        sum += fabs((y_true[i] - y_pred[i]) / y_true[i]);
+    }
+    return sum / n * 100;
+}
+
+int main() {
+    // Example data
+    double y_true[] = {1, 2, 3, 4, 5};
+    double y_pred[] = {1.1, 2.2, 3.3, 4.4, 5.5};
+    int n = sizeof(y_true) / sizeof(y_true[0]);
+
+    // Calculate accuracy
+    double tp = 4, tn = 1, fp = 1, fn = 0;
+    double accuracy_val = accuracy(tp, tn, fp, fn);
+    printf("Accuracy: %f\n", accuracy_val);
+
+    // Calculate precision
+    double precision_val = precision(tp, fp);
+    printf("Precision: %f\n", precision_val);
+
+    // Calculate recall
+    double recall_val = recall(tp, fn);
+    printf("Recall: %f\n", recall_val);
+
+    // Calculate F1 score
+    double f1_score_val = f1_score(precision_val, recall_val);
+    printf("F1 score: %f\n", f1_score_val);
+
+    // Calculate MAE
+    double mae_val = mae(y_true, y_pred, n);
+    printf("Mean Absolute Error: %f\n", mae_val);
+
+    // Calculate MSE
+    double mse_val = mse(y_true, y_pred, n);
+    printf("Mean Squared Error: %f\n", mse_val);
+
+    // Calculate RMSE
+    double rmse_val = rmse(mse_val);
+    printf("Root Mean Squared Error: %f\n", rmse_val);
+
+    // Calculate MAPE
+    double mape_val = mape(y_true, y_pred, n);
+    printf("Mean Absolute Percentage Error: %f\n", mape_val);
+
+    return 0;
+}
